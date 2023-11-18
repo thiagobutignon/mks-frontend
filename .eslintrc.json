@@ -1,0 +1,25 @@
+{
+    "env": {
+        "browser": true,
+        "es2022": true
+    },
+    "extends": [
+        "standard-with-typescript",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+      "@typescript-eslint/no-namespace": "off",
+      "@typescript-eslint/consistent-type-definitions":"off",
+      "@typescript-eslint/consistent-type-imports": "off",
+      "@typescript-eslint/semi": "off",
+      "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/strict-boolean-expressions": "off",
+      "react/react-in-jsx-scope": "off"
+    }
+}
