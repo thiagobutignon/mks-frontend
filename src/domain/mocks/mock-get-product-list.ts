@@ -1,7 +1,7 @@
 import { GetProductList } from '@/domain/models';
 import { faker } from '@faker-js/faker';
 
-export const mockProductList: GetProductList.Response = {
+export const mockProductList = (): GetProductList.Response => ({
   products: Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
     name: faker.commerce.productName(),
@@ -13,4 +13,11 @@ export const mockProductList: GetProductList.Response = {
     updatedAt: faker.date.recent().toISOString()
   })),
   count: 20
-};
+})
+
+export const mockProductListParams = (): GetProductList.Params => ({
+  orderBy: 'ASC',
+  page: faker.number.int(),
+  rows: faker.number.int(),
+  sortBy: 'id'
+})
