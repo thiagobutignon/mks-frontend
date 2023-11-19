@@ -1,20 +1,28 @@
 import './index.css'
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+
 import { Home } from './presentation/pages/home'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { makeGetBankAccount } from './main/factories'
+import { makeGetProductList } from './main/factories'
 import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 )
 
+const theme = extendTheme({
+  fonts: {
+    body: 'Montserrat, sans-serif',
+    heading: 'Montserrat, sans-serif'
+  }
+})
+
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <Home getBankAccount={makeGetBankAccount()} />
+    <ChakraProvider theme={theme}>
+      <Home getProductList={makeGetProductList()} />
     </ChakraProvider>
   </React.StrictMode>
 )

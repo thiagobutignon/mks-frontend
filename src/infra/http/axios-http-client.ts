@@ -11,12 +11,13 @@ export class AxiosHttpClient implements HttpClient {
         data: data.body,
         headers: data.headers
       })
-    } catch (error) {
+    } catch (error: any) {
       console.log(error)
+      axiosResponse = error.response
     }
     return {
-      statusCode: axiosResponse!.status,
-      body: axiosResponse!.data
+      statusCode: axiosResponse.status,
+      body: axiosResponse.data
     }
   }
 }

@@ -1,1 +1,1 @@
-export * from './make-get-bank-account';
+export * from './make-get-product-list';
