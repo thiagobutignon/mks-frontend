@@ -16,7 +16,8 @@ const useProductList = (getProductList: GetProductList): any => {
     sortBy: 'id',
     orderBy: 'DESC'
   })
-  const [cartItems, setCartItem] = useState<Product[]>([])
+  const [cartItems, setCartItem] = useState<Array<{ product: Product, quantity: number }>>([])
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     setState(old => ({ ...old, isLoading: true }));
@@ -36,11 +37,40 @@ const useProductList = (getProductList: GetProductList): any => {
     setParams(old => ({ ...old, ...params }))
   }
 
-  const addProductItem = (product: Product): void => {
-    setCartItem([...cartItems, product]);
+  const addProductItem = (product: Product, quantity: number = 1): void => {
+    const existingCartItem = cartItems.find(item => item.product.id === product.id);
+
+    if (existingCartItem) {
+      const updatedCartItems = cartItems.map(item =>
+        item.product.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+      );
+      setCartItem(updatedCartItems);
+    } else {
+      setCartItem([...cartItems, { product, quantity }]);
+    }
   };
   const removeProductItem = (productId: number): void => {
-    setCartItem((oldCartItems) => oldCartItems.filter((item) => item.id !== productId));
+    setCartItem((oldCartItems) => oldCartItems.filter((item) => item.product.id !== productId));
+  };
+
+  const handleQuantityChange = (productId: number, newQuantity: number): void => {
+    setCartItem(oldCartItems =>
+      oldCartItems.map(item =>
+        item.product.id === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const calculateTotalValue = (): number => {
+    return cartItems.reduce((total, item) => total + Number(item.product.price) * item.quantity, 0);
+  };
+
+  const handleOpenDrawer = (): void => {
+    setDrawerOpen(true);
+  };
+
+  const handleCloseDrawer = (): void => {
+    setDrawerOpen(false);
   };
 
   return {
@@ -50,7 +80,12 @@ const useProductList = (getProductList: GetProductList): any => {
     changePage,
     cartItems,
     addProductItem,
-    removeProductItem
+    removeProductItem,
+    handleQuantityChange,
+    calculateTotalValue,
+    isDrawerOpen,
+    handleOpenDrawer,
+    handleCloseDrawer
   };
 };
 
